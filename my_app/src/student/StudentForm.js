@@ -25,7 +25,6 @@ class StudentForm extends React.Component {
         }else{
             alert("Formato no valido");
             this.setState ({ carnet: '', horario: "Lunes de 9:00 a 11.00", tarde: false });
-            this.render();
         }
         
     }
