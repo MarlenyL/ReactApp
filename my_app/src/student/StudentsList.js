@@ -19,7 +19,7 @@ class StudentsList extends React.Component {
                 <tr key={carnet}>
                     <td>{carnet}</td>
                     <td>{horario}</td>
-                    <td>{tarde}</td>
+                    <td>{tarde ? "Tarde" : "A tiempo"}</td>
                     <td>
                         <button  onClick={() => {this.props.onDelete(carnet)}}>Delete</button>
                     </td>

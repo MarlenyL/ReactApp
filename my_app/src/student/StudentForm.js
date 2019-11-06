@@ -5,8 +5,7 @@ class StudentForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { carnet: '', horario: '', tarde: true };
-
+        this.state = { carnet: '', horario: "Lunes de 9:00 a 11.00", tarde: true };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -16,8 +15,19 @@ class StudentForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         // Se necesitan validaciones de entrada
-        let student = new Student(this.state.carnet, this.state.horario, this.state.tarde);
-        this.props.onSave(student);
+        var carnetRegex = new RegExp('[0-9]{8}');
+        console.log(carnetRegex.test(this.state.carnet) && this.state.carnet.length===8);
+        if(carnetRegex.test(this.state.carnet) && this.state.carnet.length===8){
+            let student = new Student(this.state.carnet, this.state.horario, this.state.tarde);
+            this.props.onSave(student);
+            this.setState({ carnet: '', horario: "Lunes de 9:00 a 11.00", tarde: false });
+
+        }else{
+            alert("Formato no valido");
+            this.setState ({ carnet: '', horario: "Lunes de 9:00 a 11.00", tarde: false });
+            this.render();
+        }
+        
     }
 
     handleInputChange(event) {
@@ -28,7 +38,7 @@ class StudentForm extends React.Component {
         this.setState({
             [name]: value
         });
-    }
+    }  
 
     // Label + input
     // TODO: Necesita se modificado para funcionar con todos los tipos de entrada
@@ -38,10 +48,11 @@ class StudentForm extends React.Component {
                 <fieldset  className="form-group">
                     <div className="custom-control custom-switch">
                         <input
+                            name = {name}
                             className= {classi}
                             type={type}
-                            name={id} id={id}
-                            checked={this.state.name}
+                            id={id}
+                            checked={this.state.tarde}
                             onChange={this.handleInputChange} 
                         />
                         <label htmlFor={id} className = {classl}>{labeltext}</label>
@@ -68,7 +79,7 @@ class StudentForm extends React.Component {
         return(
             <div className="form-group">
                 <label htmlFor="horario">Seleccione el horario:</label>
-                <select name="horario" className="form-control" id="schedule_field" value={this.state[name]} onChange={this.handleInputChange} >
+                <select name="horario" className="form-control" id="schedule_field" value={this.state.horario.text} onChange={this.handleInputChange} >
                     <option value="Lunes de 9:00 a 11.00">Lunes de 9:00 a 11.00</option>
                     <option value="Martes de 13:30 a 15:30">Martes de 13:30 a 15:30</option>
                     <option value="Miércoles de 9:00 a 11.00">Miércoles de 9:00 a 11.00</option>

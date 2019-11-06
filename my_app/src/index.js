@@ -23,7 +23,8 @@ class App extends React.Component {
             students.push(student);
             this.setState({ students, err: '' });
         } else {
-            this.setState({ err: "El estudiante ya existe" })
+            this.setState({ err: "El estudiante ya existe" });
+            alert("El estudiante ya existe");
         }
 
     }
@@ -34,12 +35,11 @@ class App extends React.Component {
         });
         this.setState({ students });
     }
-
     render() {
         return (
             <div className="container">
                 <div >
-                    <div>{this.state.err}</div>
+                    
                     <StudentForm onSave={(student) => {
                         this.saveStudent(student)
                     }} />
